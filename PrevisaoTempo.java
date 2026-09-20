@@ -48,5 +48,38 @@ public class PrevisaoTempo{
 
         return response.body();
     }
+
+    // IMPRIME OS DADOS
+    public static void imprimirDadosClimaticos(String dados){
+        System.out.println("Dados oiginais (JSON)" + dados);
+
+        JSONObject dadosJson = new JSONObject("location").getString("name");
+        JSONObject informacoesMeteorologicas = dadosJson.getJSONObject("current");
+
+        // EXTRAI OS DADOS DA LOCALIZAÇÃO
+        String cidade = dadosJson.getJSONObject("location").getString("name");
+        String pais = dadosJson.getJSONObject("location").getString("country");
+
+        // EXTRAI DADOS ADICIONAIS
+        Strinf condicaoTempo = informacoesMeteorologicas.getJSONObject("condition").getString("text");
+        int umidade = informacoesMeteorologicas.getInt("umidity");
+        float velocidadeVento = informacoesMeteorologicas.getFloat("winf_kph");
+        float pressaoAtmosferica = informacoesMeteorologicas.getFloat("pressure_mb");
+        float sensasaoTermica = informacoesMeteorologicas.getFloat("feelslike_c");
+        float temperaturaAtual = informacoesMeteorologicas.getFloat("temp_c");
+        
+        // PEGA DATA E HORA NO MOMENTO DA CONSULTA 
+        String dataHoraString = informacoesMeteorologicas.getString("last_updated");
+
+        //IMPRIME AS INFORMAÇÕES
+        System.out.println("Informações Meteorológicas para: " + cidade + ", " + pais);
+        System.out.println("Data e Hora: " + dataHoraString);
+        System.out.println("Temperatura Atual: " + temperaturaAtual + "°C");
+        System.out.println("Sensação Térmica: " + sensasaoTermica + "°C");
+        System.out.println("Condição do Tempo: " + condicaoTempo);
+        System.out.println("Umidade: " + umidade + "%");
+        System.out.println("Velocidade do Vento: " + velocidadeVento + "km/h");
+        System.out.println("Pressao Atmosférica: " + pressaoAtmosferica + "mb" );
+    }
 	
 }
